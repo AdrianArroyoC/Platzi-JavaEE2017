@@ -61,7 +61,6 @@ public class SocialMediaController {
 		return new ResponseEntity<SocialMedia>(socialMedia, HttpStatus.OK);
 	}
 	
-	
 	//POST
 	@RequestMapping(value="/socialMedias", method = RequestMethod.POST, headers = "Accept=application/json")
 	public ResponseEntity<?> createSocialMedia(@RequestBody SocialMedia socialMedia, UriComponentsBuilder uriComponentsBuilder) {
@@ -69,7 +68,7 @@ public class SocialMediaController {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 		}
 		if (_socialMediaService.findSocialMediaByName(socialMedia.getName()) != null) {
-			return new ResponseEntity(new CustomErrorType("socialMedia name is required"), HttpStatus.CONFLICT);
+			return new ResponseEntity(new CustomErrorType("socialMedia already exist"), HttpStatus.CONFLICT);
 		}
 		_socialMediaService.saveSocialMedia(socialMedia);
 		SocialMedia socialMedia2 = _socialMediaService.findSocialMediaByName(socialMedia.getName());
