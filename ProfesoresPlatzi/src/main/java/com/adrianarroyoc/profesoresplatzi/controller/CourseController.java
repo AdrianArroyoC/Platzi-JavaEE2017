@@ -28,20 +28,27 @@ public class CourseController {
 	
 	//GET
 	@RequestMapping(value="/courses", method = RequestMethod.GET, headers = "Accept=application/json")
-	public ResponseEntity<List<Course>> getCourses(@RequestParam(value="name", required=false)String name){
+	public ResponseEntity<List<Course>> getCourses(@RequestParam(value="name", required=false)String name, @RequestParam(value="id_teacher", required=false)Long id_teacher) {
 		List<Course> courses = new ArrayList<>();
-		courses = _courseService.findAllCourses();
-		if (name == null) {
+		if (id_teacher != null) {
+			courses = _courseService.findByIdTeacher(id_teacher);
 			if (courses.isEmpty()) {
 				return new ResponseEntity(HttpStatus.NO_CONTENT);
 			}
-			return new ResponseEntity<List<Course>>(courses, HttpStatus.OK);
 		}
-		Course course = _courseService.findCourseByName(name);
-		if (course == null) {
-			return new ResponseEntity(HttpStatus.NOT_FOUND);
+		if (name != null) {
+			Course course = _courseService.findCourseByName(name);
+			if (course == null) {
+				return new ResponseEntity(HttpStatus.NOT_FOUND);
+			}
+			courses.add(course);
 		}
-		courses.add(course);
+		if (name == null && id_teacher == null) {
+			courses = _courseService.findAllCourses();
+			if (courses.isEmpty()) {
+				return new ResponseEntity(HttpStatus.NO_CONTENT);
+			}
+		}
 		return new ResponseEntity<List<Course>>(courses, HttpStatus.OK);
 	}
 	
@@ -85,6 +92,8 @@ public class CourseController {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 		}
 		currentCourse.setName(course.getName());
+		currentCourse.setThemes(course.getThemes());
+		currentCourse.setProject(course.getProject());
 		_courseService.updateCourse(currentCourse);
 		return new ResponseEntity<Course>(currentCourse, HttpStatus.OK);
 	}
