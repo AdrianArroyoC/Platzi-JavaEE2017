@@ -21,4 +21,6 @@ public interface SocialMediaService {
 	
 	TeacherSocialMedia findSocialMediaByIdAndName(Long idSociaMedia, String nickname);
 	
+	TeacherSocialMedia findSocialMediaByIdTeacherAndIdSocialMedia(Long idTeacher, Long idSocialMedia);
+	
 }

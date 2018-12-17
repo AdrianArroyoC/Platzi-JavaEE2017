@@ -5,6 +5,8 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="teacher")
 public class Teacher implements Serializable{
@@ -21,6 +23,7 @@ public class Teacher implements Serializable{
 	private String avatar;
 	
 	@OneToMany(mappedBy="teacher", fetch=FetchType.EAGER)
+	@JsonIgnore
 	private Set<Course> courses;
 	
 	@OneToMany(cascade=CascadeType.ALL)
@@ -38,7 +41,7 @@ public class Teacher implements Serializable{
 		this.avatar = avatar;
 	}
 
-	public long getIdTeacher() {
+	public Long getIdTeacher() {
 		return idTeacher;
 	}
 	public void setIdTeacher(long idTeacher) {

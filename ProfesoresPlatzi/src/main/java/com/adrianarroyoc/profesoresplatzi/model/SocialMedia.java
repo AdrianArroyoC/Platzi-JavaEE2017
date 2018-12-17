@@ -40,10 +40,10 @@ public class SocialMedia implements Serializable {
 		this.icon = icon;
 	}
 
-	public long getIdSocialMedia() {
+	public Long getIdSocialMedia() {
 		return idSocialMedia;
 	}
-	public void setIdSocialMedia(long idSocialMedia) {
+	public void setIdSocialMedia(Long idSocialMedia) {
 		this.idSocialMedia = idSocialMedia;
 	}
 	public String getName() {
